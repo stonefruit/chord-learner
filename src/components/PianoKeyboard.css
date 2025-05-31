@@ -59,15 +59,26 @@
 }
 
 .white-key.highlighted {
-  background: linear-gradient(to bottom, #ff6b6b 0%, #ee5a5a 100%);
-  border-color: #dc4444;
+  background: linear-gradient(to bottom, #10f896 0%, #0ec87a 100%);
+  border-color: #0aa862;
   transform: translateY(2px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 20px rgba(16, 248, 150, 0.6), inset 0 0 20px rgba(16, 248, 150, 0.3);
+  position: relative;
+}
+
+.white-key.highlighted::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3) 0%, transparent 50%);
+  border-radius: 0 0 6px 6px;
 }
 
 .white-key.highlighted.show-answer {
-  background: linear-gradient(to bottom, #ff8787 0%, #ff6b6b 100%);
-  animation: pulse 0.5s ease-in-out;
+  animation: glow-pulse 0.6s ease-out;
 }
 
 .black-keys {
@@ -103,15 +114,26 @@
 }
 
 .black-key.highlighted {
-  background: linear-gradient(to bottom, #ff4757 0%, #cc2e3f 100%);
-  border-color: #aa1e2f;
+  background: linear-gradient(to bottom, #0ec87a 0%, #0aa862 100%);
+  border-color: #088850;
   transform: translateY(2px);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 25px rgba(16, 248, 150, 0.8), inset 0 0 15px rgba(16, 248, 150, 0.4);
+  position: relative;
+}
+
+.black-key.highlighted::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+  border-radius: 0 0 5px 5px;
 }
 
 .black-key.highlighted.show-answer {
-  background: linear-gradient(to bottom, #ff6b7a 0%, #ff4757 100%);
-  animation: pulse 0.5s ease-in-out;
+  animation: glow-pulse 0.6s ease-out;
 }
 
 .note-label {
@@ -136,24 +158,29 @@
 
 .white-key.highlighted .note-label,
 .white-key.highlighted .octave-label {
-  color: #fff;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  color: #064e3b;
+  font-weight: 800;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
 }
 
 .black-key.highlighted .note-label {
   color: #fff;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  font-weight: 700;
 }
 
-@keyframes pulse {
+@keyframes glow-pulse {
   0% {
     transform: translateY(2px);
+    filter: brightness(1);
   }
   50% {
     transform: translateY(0);
+    filter: brightness(1.3);
   }
   100% {
     transform: translateY(2px);
+    filter: brightness(1);
   }
 }
 

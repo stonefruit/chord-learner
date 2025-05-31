@@ -80,16 +80,22 @@ const ChordQuiz = ({ selectedKeys, onChordGenerated, onAnswer, showAnswer }) => 
       </div>
       
       {showAnswer && (
-        <div className="answer-feedback">
+        <div className={`answer-feedback ${userAnswer === currentChord.name ? 'correct-feedback' : 'incorrect-feedback'}`}>
+          <div className="feedback-icon">
+            {userAnswer === currentChord.name ? '✓' : '✗'}
+          </div>
           <p className={userAnswer === currentChord.name ? 'correct-text' : 'incorrect-text'}>
-            {userAnswer === currentChord.name ? 'Correct!' : `Incorrect. The answer is ${currentChord.fullName}`}
+            {userAnswer === currentChord.name ? 'Excellent!' : `The answer is ${currentChord.fullName}`}
           </p>
         </div>
       )}
       
       {answered && (
         <button className="next-button" onClick={handleNext}>
-          Next Chord
+          <span>Next Chord</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
         </button>
       )}
     </div>
