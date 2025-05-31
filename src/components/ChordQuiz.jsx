@@ -1,0 +1,99 @@
+import React, { useState, useEffect } from 'react'
+import { getRandomChord, chordTypes } from '../utils/chordData'
+import './ChordQuiz.css'
+
+const ChordQuiz = ({ selectedKeys, onChordGenerated, onAnswer, showAnswer }) => {
+  const [currentChord, setCurrentChord] = useState(null)
+  const [userAnswer, setUserAnswer] = useState('')
+  const [options, setOptions] = useState([])
+  const [answered, setAnswered] = useState(false)
+
+  const generateNewChord = () => {
+    if (selectedKeys.length === 0) return
+    
+    const chord = getRandomChord(selectedKeys)
+    setCurrentChord(chord)
+    onChordGenerated(chord)
+    
+    // Generate multiple choice options
+    const allOptions = Object.keys(chordTypes).map(type => {
+      const chordName = `${chord.root}${chordTypes[type].symbol}`
+      return chordName
+    })
+    
+    // Shuffle options
+    const shuffled = [...allOptions].sort(() => Math.random() - 0.5)
+    setOptions(shuffled.slice(0, 4))
+    
+    setUserAnswer('')
+    setAnswered(false)
+  }
+
+  useEffect(() => {
+    generateNewChord()
+  }, [selectedKeys])
+
+  const handleAnswer = (answer) => {
+    if (answered || showAnswer) return
+    
+    setUserAnswer(answer)
+    setAnswered(true)
+    const isCorrect = answer === currentChord.name
+    onAnswer(isCorrect)
+  }
+
+  const handleNext = () => {
+    generateNewChord()
+  }
+
+  if (selectedKeys.length === 0) {
+    return (
+      <div className="chord-quiz">
+        <p>Please select at least one key to start the quiz!</p>
+      </div>
+    )
+  }
+
+  if (!currentChord) {
+    return null
+  }
+
+  return (
+    <div className="chord-quiz">
+      <h2>What chord is this?</h2>
+      
+      <div className="options">
+        {options.map((option) => (
+          <button
+            key={option}
+            className={`option-button ${
+              answered && option === currentChord.name ? 'correct' : ''
+            } ${
+              answered && option === userAnswer && option !== currentChord.name ? 'incorrect' : ''
+            }`}
+            onClick={() => handleAnswer(option)}
+            disabled={answered}
+          >
+            {option}
+          </button>
+        ))}
+      </div>
+      
+      {showAnswer && (
+        <div className="answer-feedback">
+          <p className={userAnswer === currentChord.name ? 'correct-text' : 'incorrect-text'}>
+            {userAnswer === currentChord.name ? 'Correct!' : `Incorrect. The answer is ${currentChord.fullName}`}
+          </p>
+        </div>
+      )}
+      
+      {answered && (
+        <button className="next-button" onClick={handleNext}>
+          Next Chord
+        </button>
+      )}
+    </div>
+  )
+}
+
+export default ChordQuiz
