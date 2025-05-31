@@ -98,21 +98,27 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  padding-bottom: 12px;
+  padding: 0 0 12px 0;
+  margin: 0;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   transform: translateX(-50%);
 }
 
 .black-key:hover {
   background: linear-gradient(to bottom, #444 0%, #111 100%);
-  transform: translateX(-50%) translateY(1px);
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 0 0 12px 0;
 }
 
 .black-key.highlighted {
   background: linear-gradient(to bottom, #0ec87a 0%, #0aa862 100%);
   border-color: #088850;
-  transform: translateX(-50%) translateY(2px);
+  border-width: 1px;
+  transform: translateX(-50%);
   box-shadow: 0 0 25px rgba(16, 248, 150, 0.8), inset 0 0 15px rgba(16, 248, 150, 0.4);
+  margin: 0;
+  padding: 0 0 12px 0;
 }
 
 .black-key.highlighted.show-answer {
