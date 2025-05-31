@@ -10,6 +10,7 @@ function App() {
   const [score, setScore] = useState({ correct: 0, total: 0 })
   const [currentChord, setCurrentChord] = useState(null)
   const [showAnswer, setShowAnswer] = useState(false)
+  const [timeoutId, setTimeoutId] = useState(null)
 
   const handleAnswer = (isCorrect) => {
     setScore(prev => ({
@@ -17,9 +18,27 @@ function App() {
       total: prev.total + 1
     }))
     setShowAnswer(true)
-    setTimeout(() => {
+    
+    // Clear any existing timeout
+    if (timeoutId) {
+      clearTimeout(timeoutId)
+    }
+    
+    // Set new timeout
+    const newTimeoutId = setTimeout(() => {
       setShowAnswer(false)
     }, 2000)
+    setTimeoutId(newTimeoutId)
+  }
+
+  const handleChordGenerated = (chord) => {
+    // Clear feedback when new chord is generated
+    setShowAnswer(false)
+    if (timeoutId) {
+      clearTimeout(timeoutId)
+      setTimeoutId(null)
+    }
+    setCurrentChord(chord)
   }
 
   const resetScore = () => {
@@ -54,7 +73,7 @@ function App() {
           <div className="right-panel">
             <ChordQuiz 
               selectedKeys={selectedKeys}
-              onChordGenerated={setCurrentChord}
+              onChordGenerated={handleChordGenerated}
               onAnswer={handleAnswer}
               showAnswer={showAnswer}
             />
