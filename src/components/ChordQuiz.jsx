@@ -66,6 +66,28 @@ const ChordQuiz = ({
   const handleNext = () => {
     generateNewChord();
   };
+  
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      // Number keys 1-4 to select answers
+      if (!answered && !showAnswer && e.key >= '1' && e.key <= '4') {
+        const index = parseInt(e.key) - 1;
+        if (index < options.length) {
+          handleAnswer(options[index]);
+        }
+      }
+      
+      // Spacebar to go to next chord
+      if (answered && e.key === ' ') {
+        e.preventDefault(); // Prevent page scroll
+        handleNext();
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [answered, showAnswer, options]);
 
   if (selectedKeys.length === 0) {
     return (
@@ -109,7 +131,7 @@ const ChordQuiz = ({
       <h2>What chord is this?</h2>
 
       <div className="options">
-        {options.map((option) => (
+        {options.map((option, index) => (
           <button
             key={option}
             className={`option-button ${
@@ -122,6 +144,7 @@ const ChordQuiz = ({
             onClick={() => handleAnswer(option)}
             disabled={answered}
           >
+            <span className="option-number">{index + 1}</span>
             {option}
           </button>
         ))}
