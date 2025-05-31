@@ -8,16 +8,6 @@
   position: relative;
 }
 
-.piano-keyboard::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-  border-radius: 16px 16px 0 0;
-}
 
 .piano-container {
   position: relative;
@@ -173,15 +163,15 @@
 
 @media (max-width: 800px) {
   .piano-keyboard {
-    padding: 1rem;
+    padding: 0.75rem;
   }
   
   .piano-container {
-    height: 150px;
+    height: 140px;
   }
   
   .note-label {
-    font-size: 12px;
+    font-size: 11px;
   }
   
   .black-key .note-label {
@@ -191,18 +181,74 @@
   .octave-label {
     font-size: 8px;
   }
+  
+  .white-key {
+    padding-bottom: 10px;
+  }
+  
+  .black-key {
+    padding-bottom: 8px;
+    width: 5.5%;
+  }
 }
 
 @media (max-width: 600px) {
+  .piano-keyboard {
+    padding: 0.5rem;
+  }
+  
   .piano-container {
-    height: 130px;
+    height: 100px;
   }
   
   .note-label {
     font-size: 10px;
   }
   
+  .black-key .note-label {
+    font-size: 9px;
+  }
+  
+  .octave-label {
+    font-size: 7px;
+  }
+  
   .black-key {
-    width: 7%;
+    width: 5%;
+  }
+  
+  .white-key {
+    padding-bottom: 8px;
+  }
+  
+  .black-key {
+    padding-bottom: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .piano-container {
+    height: 100px;
+  }
+  
+  .note-label {
+    font-size: 9px;
+  }
+  
+  .black-key .note-label {
+    font-size: 8px;
+  }
+  
+  .octave-label {
+    font-size: 6px;
+  }
+  
+  .white-key {
+    padding-bottom: 6px;
+  }
+  
+  .black-key {
+    padding-bottom: 4px;
+    width: 4.5%;
   }
 }
