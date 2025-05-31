@@ -129,9 +129,9 @@
     gap: 1rem;
   }
   
-  .left-panel, .right-panel {
+  .left-panel,
+  .right-panel {
     height: auto;
-    min-height: 200px;
   }
 }
 
