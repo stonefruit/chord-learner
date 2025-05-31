@@ -90,8 +90,9 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   z-index: 100;
   margin-top: 0.5rem;
-  max-height: 300px;
+  max-height: min(400px, calc(100vh - 250px));
   overflow-y: auto;
+  overflow-x: hidden;
   animation: fadeIn 0.2s ease-out;
 }
 
@@ -177,6 +178,83 @@
   z-index: 50;
 }
 
+/* Chord Settings Styles */
+.settings-divider {
+  height: 1px;
+  background: #e2e8f0;
+  margin: 0.5rem 0;
+}
+
+.chord-settings-section {
+  padding: 0.75rem;
+}
+
+.section-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #64748b;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.radio-option.compact {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  position: relative;
+}
+
+.radio-option.compact:hover {
+  background: #f8fafc;
+}
+
+.radio-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.radio-label {
+  flex: 1;
+  font-size: 0.875rem;
+  color: #374151;
+}
+
+.radio-indicator {
+  color: #3b82f6;
+  font-size: 0.875rem;
+  margin-left: 0.5rem;
+}
+
+.checkbox-option {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  position: relative;
+}
+
+.checkbox-option:hover {
+  background: #f8fafc;
+}
+
+.checkbox-option input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.checkbox-label {
+  flex: 1;
+  font-size: 0.875rem;
+  color: #374151;
+}
+
+
 /* Mobile optimizations */
 @media (max-width: 768px) {
   .key-selector {
@@ -195,7 +273,7 @@
   }
   
   .dropdown-menu {
-    max-height: 250px;
+    max-height: min(300px, 50vh);
   }
   
   .dropdown-option {
@@ -217,6 +295,6 @@
   }
   
   .dropdown-menu {
-    max-height: 200px;
+    max-height: min(250px, 40vh);
   }
 }

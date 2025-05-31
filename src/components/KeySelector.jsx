@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { noteNames } from '../utils/chordData'
 import './KeySelector.css'
 
-const KeySelector = ({ selectedKeys, onChange }) => {
+const KeySelector = ({ selectedKeys, onChange, chordSettings, onChordSettingsChange }) => {
   const [isOpen, setIsOpen] = useState(false)
+  const [dropdownPosition, setDropdownPosition] = useState({})
+  const dropdownRef = useRef(null)
+  const triggerRef = useRef(null)
 
   const toggleKey = (key) => {
     if (selectedKeys.includes(key)) {
@@ -29,6 +32,29 @@ const KeySelector = ({ selectedKeys, onChange }) => {
     if (selectedKeys.length === noteNames.length) return 'All keys'
     return `${selectedKeys.length} keys selected`
   }
+  
+  useEffect(() => {
+    if (isOpen && triggerRef.current && dropdownRef.current) {
+      const triggerRect = triggerRef.current.getBoundingClientRect()
+      const dropdownHeight = dropdownRef.current.offsetHeight
+      const viewportHeight = window.innerHeight
+      
+      // Check if dropdown would go below viewport
+      if (triggerRect.bottom + dropdownHeight > viewportHeight - 20) {
+        // Position above the trigger
+        setDropdownPosition({
+          bottom: `calc(100% + 0.5rem)`,
+          top: 'auto'
+        })
+      } else {
+        // Position below the trigger (default)
+        setDropdownPosition({
+          top: '100%',
+          bottom: 'auto'
+        })
+      }
+    }
+  }, [isOpen])
 
   return (
     <div className="key-selector">
@@ -36,6 +62,7 @@ const KeySelector = ({ selectedKeys, onChange }) => {
       
       <div className="dropdown-container">
         <button 
+          ref={triggerRef}
           className="dropdown-trigger"
           onClick={() => setIsOpen(!isOpen)}
           aria-expanded={isOpen}
@@ -55,7 +82,7 @@ const KeySelector = ({ selectedKeys, onChange }) => {
         </button>
 
         {isOpen && (
-          <div className="dropdown-menu">
+          <div ref={dropdownRef} className="dropdown-menu" style={dropdownPosition}>
             <div className="dropdown-actions">
               <button className="action-button" onClick={selectAll}>
                 Select All
@@ -79,6 +106,40 @@ const KeySelector = ({ selectedKeys, onChange }) => {
                   </span>
                 </label>
               ))}
+            </div>
+            
+            <div className="settings-divider"></div>
+            
+            <div className="chord-settings-section">
+              <h4 className="section-title">Display Settings</h4>
+              
+              <label className="radio-option compact">
+                <input
+                  type="radio"
+                  name="displayMode"
+                  value="basic"
+                  checked={chordSettings.display === 'basic'}
+                  onChange={() => onChordSettingsChange({...chordSettings, display: 'basic'})}
+                />
+                <span className="radio-label">Basic chord</span>
+                <span className="radio-indicator">
+                  {chordSettings.display === 'basic' && '●'}
+                </span>
+              </label>
+              
+              <label className="radio-option compact">
+                <input
+                  type="radio"
+                  name="displayMode"
+                  value="full"
+                  checked={chordSettings.display === 'full'}
+                  onChange={() => onChordSettingsChange({...chordSettings, display: 'full'})}
+                />
+                <span className="radio-label">Full chord (all octaves)</span>
+                <span className="radio-indicator">
+                  {chordSettings.display === 'full' && '●'}
+                </span>
+              </label>
             </div>
           </div>
         )}
