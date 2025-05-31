@@ -16,14 +16,25 @@ const ChordQuiz = ({ selectedKeys, onChordGenerated, onAnswer, showAnswer }) => 
     onChordGenerated(chord)
     
     // Generate multiple choice options
-    const allOptions = Object.keys(chordTypes).map(type => {
-      const chordName = `${chord.root}${chordTypes[type].symbol}`
-      return chordName
-    })
+    const correctAnswer = chord.name
+    const allChordTypes = Object.keys(chordTypes)
     
-    // Shuffle options
-    const shuffled = [...allOptions].sort(() => Math.random() - 0.5)
-    setOptions(shuffled.slice(0, 4))
+    // Generate 3 wrong options (different from the correct answer)
+    const wrongOptions = []
+    while (wrongOptions.length < 3) {
+      const randomRoot = selectedKeys[Math.floor(Math.random() * selectedKeys.length)]
+      const randomType = allChordTypes[Math.floor(Math.random() * allChordTypes.length)]
+      const optionName = `${randomRoot}${chordTypes[randomType].symbol}`
+      
+      if (optionName !== correctAnswer && !wrongOptions.includes(optionName)) {
+        wrongOptions.push(optionName)
+      }
+    }
+    
+    // Combine correct answer with wrong options and shuffle
+    const allOptions = [correctAnswer, ...wrongOptions]
+    const shuffled = allOptions.sort(() => Math.random() - 0.5)
+    setOptions(shuffled)
     
     setUserAnswer('')
     setAnswered(false)
@@ -60,6 +71,17 @@ const ChordQuiz = ({ selectedKeys, onChordGenerated, onAnswer, showAnswer }) => 
 
   return (
     <div className="chord-quiz">
+      {showAnswer && (
+        <div className={`answer-feedback-floating ${userAnswer === currentChord.name ? 'correct-feedback' : 'incorrect-feedback'}`}>
+          <div className="feedback-icon">
+            {userAnswer === currentChord.name ? '✓' : '✗'}
+          </div>
+          <p className={userAnswer === currentChord.name ? 'correct-text' : 'incorrect-text'}>
+            {userAnswer === currentChord.name ? 'Excellent!' : `The answer is ${currentChord.fullName}`}
+          </p>
+        </div>
+      )}
+      
       <h2>What chord is this?</h2>
       
       <div className="options">
@@ -78,17 +100,6 @@ const ChordQuiz = ({ selectedKeys, onChordGenerated, onAnswer, showAnswer }) => 
           </button>
         ))}
       </div>
-      
-      {showAnswer && (
-        <div className={`answer-feedback ${userAnswer === currentChord.name ? 'correct-feedback' : 'incorrect-feedback'}`}>
-          <div className="feedback-icon">
-            {userAnswer === currentChord.name ? '✓' : '✗'}
-          </div>
-          <p className={userAnswer === currentChord.name ? 'correct-text' : 'incorrect-text'}>
-            {userAnswer === currentChord.name ? 'Excellent!' : `The answer is ${currentChord.fullName}`}
-          </p>
-        </div>
-      )}
       
       {answered && (
         <button className="next-button" onClick={handleNext}>

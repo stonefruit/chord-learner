@@ -138,37 +138,42 @@
   }
 }
 
-.answer-feedback {
-  margin: 0.5rem 0;
-  padding: 0.75rem;
-  border-radius: 10px;
-  position: relative;
-  z-index: 1;
+.answer-feedback-floating {
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.75rem 1.25rem;
+  border-radius: 12px;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  animation: slideIn 0.3s ease-out;
+  gap: 0.75rem;
+  z-index: 100;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  animation: floatIn 0.4s ease-out;
 }
 
-@keyframes slideIn {
+@keyframes floatIn {
   from {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateX(-50%) translateY(20px) scale(0.9);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(-50%) translateY(0) scale(1);
   }
 }
 
-.correct-feedback {
-  background: linear-gradient(135deg, rgba(16, 248, 150, 0.1) 0%, rgba(16, 248, 150, 0.05) 100%);
-  border: 2px solid rgba(16, 248, 150, 0.3);
+.answer-feedback-floating.correct-feedback {
+  background: linear-gradient(135deg, #10f896 0%, #0ec87a 100%);
+  border: 2px solid #0aa862;
+  color: white;
 }
 
-.incorrect-feedback {
-  background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.05) 100%);
-  border: 2px solid rgba(239, 68, 68, 0.3);
+.answer-feedback-floating.incorrect-feedback {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  border: 2px solid #b91c1c;
+  color: white;
 }
 
 .feedback-icon {
@@ -183,17 +188,17 @@
   flex-shrink: 0;
 }
 
-.correct-feedback .feedback-icon {
-  background: #10f896;
-  color: #064e3b;
-  box-shadow: 0 0 20px rgba(16, 248, 150, 0.5);
+.answer-feedback-floating.correct-feedback .feedback-icon {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  box-shadow: none;
   animation: bounceIn 0.5s ease-out;
 }
 
-.incorrect-feedback .feedback-icon {
-  background: #ef4444;
+.answer-feedback-floating.incorrect-feedback .feedback-icon {
+  background: rgba(255, 255, 255, 0.2);
   color: white;
-  box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+  box-shadow: none;
   animation: shake 0.5s ease-out;
 }
 
@@ -221,18 +226,13 @@
   }
 }
 
-.correct-text {
-  color: #10b981;
+.answer-feedback-floating .correct-text,
+.answer-feedback-floating .incorrect-text {
+  color: white;
   font-weight: 600;
   margin: 0;
-  font-size: 0.95rem;
-}
-
-.incorrect-text {
-  color: #ef4444;
-  font-weight: 600;
-  margin: 0;
-  font-size: 0.95rem;
+  font-size: 1rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .next-button {
