@@ -28,27 +28,39 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Piano Chord Learner</h1>
+      <header className="app-header">
+        <h1>🎹 Piano Chord Learner</h1>
+        <div className="header-score">
+          <Score score={score} onReset={resetScore} />
+        </div>
+      </header>
       
-      <div className="controls">
-        <KeySelector 
-          selectedKeys={selectedKeys} 
-          onChange={setSelectedKeys} 
-        />
-        <Score score={score} onReset={resetScore} />
-      </div>
-
-      <PianoKeyboard 
-        highlightedNotes={currentChord?.notes || []} 
-        showAnswer={showAnswer}
-      />
-
-      <ChordQuiz 
-        selectedKeys={selectedKeys}
-        onChordGenerated={setCurrentChord}
-        onAnswer={handleAnswer}
-        showAnswer={showAnswer}
-      />
+      <main className="app-main">
+        <div className="piano-section">
+          <PianoKeyboard 
+            highlightedNotes={currentChord?.notes || []} 
+            showAnswer={showAnswer}
+          />
+        </div>
+        
+        <div className="controls-section">
+          <div className="left-panel">
+            <KeySelector 
+              selectedKeys={selectedKeys} 
+              onChange={setSelectedKeys} 
+            />
+          </div>
+          
+          <div className="right-panel">
+            <ChordQuiz 
+              selectedKeys={selectedKeys}
+              onChordGenerated={setCurrentChord}
+              onAnswer={handleAnswer}
+              showAnswer={showAnswer}
+            />
+          </div>
+        </div>
+      </main>
     </div>
   )
 }

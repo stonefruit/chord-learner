@@ -1,9 +1,31 @@
 .key-selector {
-  background: rgba(255, 255, 255, 0.9);
+  background: linear-gradient(145deg, #ffffff 0%, #f3f4f6 100%);
   padding: 1.5rem;
-  border-radius: 12px;
-  max-width: 500px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  height: 100%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.key-selector::before {
+  content: '🎵';
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 2rem;
+  opacity: 0.1;
+  animation: bounce 3s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 .key-selector h3 {
@@ -14,16 +36,18 @@
 
 .key-buttons {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 0.5rem;
   margin-bottom: 1rem;
+  flex: 1;
 }
 
 .key-button {
-  padding: 0.5rem;
+  padding: 0.75rem;
   font-size: 1rem;
+  font-weight: 600;
   border: 2px solid #e2e8f0;
-  border-radius: 6px;
+  border-radius: 10px;
   background: white;
   color: #2d3748;
   cursor: pointer;
@@ -34,14 +58,16 @@
 .key-button:hover {
   background: #f7fafc;
   border-color: #cbd5e1;
-  transform: translateY(-1px);
+  transform: translateY(-2px) scale(1.05);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .key-button.selected {
-  background: #3b82f6;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
-  border-color: #2563eb;
+  border-color: transparent;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
 }
 
 .select-actions {
