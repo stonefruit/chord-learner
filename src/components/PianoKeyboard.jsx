@@ -9,17 +9,18 @@ const PianoKeyboard = ({ highlightedNotes = [], showAnswer }) => {
   ]
   
   // Black keys with their positions (percentage from left)
+  // Each white key is 1/14th of the width (7.14%), so positions are calculated accordingly
   const blackKeys = [
-    { note: 'C#3', position: 7.14 },   // Between C3 and D3
-    { note: 'D#3', position: 21.43 },  // Between D3 and E3
-    { note: 'F#3', position: 50 },     // Between F3 and G3
-    { note: 'G#3', position: 64.29 },  // Between G3 and A3
-    { note: 'A#3', position: 78.57 },  // Between A3 and B3
-    { note: 'C#4', position: 107.14 }, // Between C4 and D4
-    { note: 'D#4', position: 121.43 }, // Between D4 and E4
-    { note: 'F#4', position: 150 },    // Between F4 and G4
-    { note: 'G#4', position: 164.29 }, // Between G4 and A4
-    { note: 'A#4', position: 178.57 }  // Between A4 and B4
+    { note: 'C#3', position: 5.36 },   // Between C3 and D3
+    { note: 'D#3', position: 12.50 },  // Between D3 and E3
+    { note: 'F#3', position: 26.79 },  // Between F3 and G3
+    { note: 'G#3', position: 33.93 },  // Between G3 and A3
+    { note: 'A#3', position: 41.07 },  // Between A3 and B3
+    { note: 'C#4', position: 55.36 },  // Between C4 and D4
+    { note: 'D#4', position: 62.50 },  // Between D4 and E4
+    { note: 'F#4', position: 76.79 },  // Between F4 and G4
+    { note: 'G#4', position: 83.93 },  // Between G4 and A4
+    { note: 'A#4', position: 91.07 }   // Between A4 and B4
   ]
   
   const isNoteHighlighted = (note) => {
